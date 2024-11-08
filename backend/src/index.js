@@ -4,7 +4,6 @@ const app = express();
 const port = 8080;
 const baseUrl = "/api";
 const morgan = require('morgan')
-const db = require("../src/database/DataBaseConfiguration")
 
 const paths = {
   admin: "/admin",

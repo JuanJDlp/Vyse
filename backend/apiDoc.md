@@ -5,7 +5,7 @@ Esta API proporciona los servicios necesarios para gestionar una tienda en líne
 
 ## Endpoints
 
-### 1. **Inicio de sesión - Administrador**
+### 1. **Inicio de sesión**
 - **Método:** `POST`
 - **URL:** `/api/auth/login`
 - **Descripción:** Este endpoint permite al administrador iniciar sesión en su cuenta.
@@ -62,7 +62,7 @@ Esta API proporciona los servicios necesarios para gestionar una tienda en líne
 
 ### 3. **Registro de cliente**
 - **Método:** `POST`
-- **URL:** `/api/client/register`
+- **URL:** `/api/auth/register`
 - **Descripción:** Este endpoint permite a los clientes registrarse en la tienda.
 - **Body:**
   ```json

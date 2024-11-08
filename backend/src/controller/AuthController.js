@@ -7,7 +7,6 @@ const JWT_SECRET = '2acbd9bc00c26ce1bf2c777a23167a89e133b18b816780403a8ba69a0d06
 // Register User
 const registerUser = async (req, res) => {
     await body('username').not().isEmpty().trim().escape().run(req);
-    await body('email').isEmail().normalizeEmail().run(req);
 
     const errors = validationResult(req);
 
