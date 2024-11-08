@@ -7,13 +7,13 @@ Esta API proporciona los servicios necesarios para gestionar una tienda en líne
 
 ### 1. **Inicio de sesión - Administrador**
 - **Método:** `POST`
-- **URL:** `/api/admin/login`
+- **URL:** `/api/auth/login`
 - **Descripción:** Este endpoint permite al administrador iniciar sesión en su cuenta.
 - **Body:**
   ```json
   {
-    "username": "admin_username",
-    "password": "admin_password"
+    "username": "username",
+    "password": "password"
   }
   ```
 - **Respuesta:**
@@ -83,33 +83,6 @@ Esta API proporciona los servicios necesarios para gestionar una tienda en líne
     ```json
     {
       "error": "Invalid data"
-    }
-    ```
-
----
-
-### 4. **Inicio de sesión - Cliente**
-- **Método:** `POST`
-- **URL:** `/api/client/login`
-- **Descripción:** Este endpoint permite a los clientes iniciar sesión en su cuenta.
-- **Body:**
-  ```json
-  {
-    "username": "client_username",
-    "password": "client_password"
-  }
-  ```
-- **Respuesta:**
-  - **Código 200**: Login exitoso. Retorna un token JWT para futuras solicitudes.
-    ```json
-    {
-      "token": "jwt_token"
-    }
-    ```
-  - **Código 401**: Credenciales incorrectas.
-    ```json
-    {
-      "error": "Invalid credentials"
     }
     ```
 
