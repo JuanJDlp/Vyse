@@ -136,25 +136,39 @@ Esta API proporciona los servicios necesarios para gestionar una tienda en líne
 
 ---
 
+### . **Ver los productos del carro - Cliente**
+- **Método:** `GET`
+- **URL:** `/api/client/cart`
+- **Descripción:** Este endpoint permite a los clientes ver los productos que tiene actualmente en el carrito 
+- **Respuesta:**
+  - **Código 200**: Se retornan todos los objectos dentro del carrito del cliente 
+    ```json
+    [
+      {
+        "id": 1,
+        "name": "Product Name",
+        "description": "Product Description",
+        "price": 29.99,
+        "quantity": 2
+      },
+      {
+        "id": 2,
+        "name": "Another Product",
+        "description": "Another Description",
+        "price": 49.99,
+        "quantity": 3
+      }
+    ]
+    ```
+
+  - La cantidad inidica cuantos elementos de esos se encuentran en el carro
+
+---
+
 ### 7. **Realizar compra - Cliente**
 - **Método:** `POST`
 - **URL:** `/api/client/checkout`
 - **Descripción:** Este endpoint permite a los clientes realizar una compra, generando una factura con los detalles de los productos adquiridos.
-- **Body:**
-  ```json
-  {
-    "cart": [
-      {
-        "product_id": 1,
-        "quantity": 2
-      },
-      {
-        "product_id": 2,
-        "quantity": 1
-      }
-    ]
-  }
-  ```
 - **Respuesta:**
   - **Código 200**: Compra realizada exitosamente. Retorna la factura.
     ```json

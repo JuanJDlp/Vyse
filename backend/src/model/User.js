@@ -28,11 +28,24 @@ const UserModel = {
         }
     },
 
-    userExists: async (email) => {
+    getUserByID: async (id) => {
         try {
             const result = await pool.query(
-                `SELECT COUNT(*) FROM users WHERE email = $1`,
-                [email]
+                `SELECT * FROM users WHERE id = $1`,
+                [id]
+            );
+            return result.rows[0];
+        } catch (err) {
+            console.error('Error getting the user by id', err);
+            throw err;
+        }
+    },
+
+    userExists: async (id) => {
+        try {
+            const result = await pool.query(
+                `SELECT COUNT(*) FROM users WHERE id = $1`,
+                [id]
             );
             return result.rows[0].count > 0;
         } catch (err) {
