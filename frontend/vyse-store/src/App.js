@@ -39,7 +39,7 @@ const App = () => {
         />
         <Route path="/login" element={<LoginPage setToken={handleSetToken} />} />
         <Route path="/register" element={<RegisterPage />} />
-        <Route path="/cart" element={<CartPage />} />
+        <Route path="/cart" element={<CartPage token={token} setCartCount={setCartCount}/>} />
         <Route path="/purchases" element={<PurchaseHistoryPage />} />
         <Route path="/admin" element={<AdminDashboard />} />
       </Routes>

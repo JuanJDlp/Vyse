@@ -9,10 +9,11 @@ const HomePage = ({token, userRole, setCartCount }) => { // Added userRole prop
   const navigate = useNavigate();
   // Fetch products when the component mounts
   useEffect(() => {
+    const token = localStorage.getItem('token');
     axios
-      .get('http://localhost:8080/api/products')
-      .then((response) => setProducts(response.data))
-      .catch((error) => console.error('Error fetching products:', error));
+    .get('http://localhost:8080/api/products')
+    .then((response) => setProducts(response.data))
+    .catch((error) => console.error('Error fetching products:', error));
   }, []);
 
   // Handle adding a product to the cart
