@@ -7,10 +7,10 @@ const createProduct = async (req, res) => {
     await body('price').not().isEmpty().run(req);
     await body('quantity').not().isEmpty().run(req);
 
-    //TODO:ACTIVAR ESTA LINEA CUANDO SE VAYA A PROBAR LA API FINAL
-    // if (req.user.role !== "admin"){
-    //     res.status(403).json({error: "You need to be an admin to create a product" })
-    // }
+    
+     if (req.user.role !== "admin"){
+        res.status(403).json({error: "You need to be an admin to create a product" })
+     }
 
     const errors = validationResult(req);
 
