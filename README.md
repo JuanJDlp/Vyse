@@ -5,6 +5,10 @@
 - Mariana Agudelo Salazar - A00398722 
 - Juan Jose De La Pava - A00381213
 
+## Link del repositorio
+
+    https://github.com/JuanJDlp/Vys
+
 Vyse es una aplicación de tienda en línea desarrollada como parte del proyecto final de **Computación en Internet I** . La plataforma ofrece funcionalidades básicas para que los administradores puedan gestionar productos y los clientes realicen compras de forma sencilla e intuitiva. Además, genera facturas para cada compra realizada y permite a los clientes acceder a su historial de compras.
 
 ## Descripción General
