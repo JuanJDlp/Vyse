@@ -83,24 +83,24 @@ Sigue estos pasos para configurar y ejecutar la aplicación en un entorno local:
    cd Vyse
 
 2. Para ejecutar el backend 
-`
+```bash
     cd backend
 
     npm i
 
     npm start
 
-`
+```
 
 3. Para ejecutar el front end
 
-`
+```bash
 cd frontend/vyse-store/
 
 npm i
 
 npm start
 
-`
+```
 
 Es importante que tenga todas las dependencias de node instaladas y que para probar el proyecto ejecute el front end y el backend simultaneamente. La base de datos ya esta hosteada en supabase, por lo que no es necesario descargarla.
