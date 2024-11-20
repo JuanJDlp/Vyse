@@ -35,7 +35,7 @@ const App = () => {
       <Routes>
       <Route
           path="/"
-          element={<HomePage userRole={userRole} setCartCount={setCartCount} />} // Pass setCartCount to HomePage
+          element={<HomePage token={token} userRole={userRole} setCartCount={setCartCount} />} // Pass setCartCount to HomePage
         />
         <Route path="/login" element={<LoginPage setToken={handleSetToken} />} />
         <Route path="/register" element={<RegisterPage />} />

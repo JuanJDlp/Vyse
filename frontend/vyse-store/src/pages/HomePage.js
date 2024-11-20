@@ -1,10 +1,12 @@
 import React, { useState, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom'; // Import useNavigate
 import axios from 'axios';
 
-const HomePage = ({userRole, setCartCount }) => { // Added userRole prop
+const HomePage = ({token, userRole, setCartCount }) => { // Added userRole prop
   const [products, setProducts] = useState([]);
   const [message, setMessage] = useState(null); // Feedback message
   const [messageType, setMessageType] = useState(''); // Message type ('success' or 'error')
+  const navigate = useNavigate();
   // Fetch products when the component mounts
   useEffect(() => {
     axios
@@ -15,6 +17,15 @@ const HomePage = ({userRole, setCartCount }) => { // Added userRole prop
 
   // Handle adding a product to the cart
   const handleAddToCart = (productId) => {
+    if (!token) {
+      setMessage('Please log in to add items to the cart.');
+      setMessageType('error');
+      setTimeout(() => {
+        setMessage(null);
+        navigate('/login'); // Redirect to login
+      }, 2000);
+      return;
+    }
     axios
       .post(
         'http://localhost:8080/api/client/cart',
