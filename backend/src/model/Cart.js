@@ -25,7 +25,7 @@ const CartModel = {
 
     getAllProductsInTheCart: async (user_id) => {
         try {
-            const result = await pool.query(`SELECT p.id, p.name, p.description,p.price,c.quantity FROM cart c JOIN products p on p.id = c.product_id WHERE user_id = $1`, [user_id]);
+            const result = await pool.query(`SELECT p.id, p.name, p.description,p.price,c.quantity,p.image FROM cart c JOIN products p on p.id = c.product_id WHERE user_id = $1`, [user_id]);
             return result.rows;
         } catch (err) {
             console.log("Error while fetching all the products in the cart");

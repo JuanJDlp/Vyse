@@ -41,7 +41,8 @@ Esta API proporciona los servicios necesarios para gestionar una tienda en líne
     "name": "Product Name",
     "description": "Product Description",
     "price": 29.99,
-    "quantity": 100
+    "quantity": 100,
+    "image": "/link/to/image.com"
   }
   ```
 - **Respuesta:**
@@ -101,14 +102,16 @@ Esta API proporciona los servicios necesarios para gestionar una tienda en líne
         "name": "Product Name",
         "description": "Product Description",
         "price": 29.99,
-        "quantity": 100
+        "quantity": 100,
+        "image": "link/to/image.com"
       },
       {
         "id": 2,
         "name": "Another Product",
         "description": "Another Description",
         "price": 49.99,
-        "quantity": 50
+        "quantity": 50,
+        "image": "link/to/image.com"
       }
     ]
     ```
@@ -149,14 +152,16 @@ Esta API proporciona los servicios necesarios para gestionar una tienda en líne
         "name": "Product Name",
         "description": "Product Description",
         "price": 29.99,
-        "quantity": 2
+        "quantity": 2,
+        "image": "link/to/image.com"
       },
       {
         "id": 2,
         "name": "Another Product",
         "description": "Another Description",
         "price": 49.99,
-        "quantity": 3
+        "quantity": 3,
+        "image": "link/to/image.com"
       }
     ]
     ```
