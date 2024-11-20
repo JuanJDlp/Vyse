@@ -7,7 +7,7 @@
 
 ## Link del repositorio
 
-    https://github.com/JuanJDlp/Vys
+    https://github.com/JuanJDlp/Vyse
 
 Vyse es una aplicación de tienda en línea desarrollada como parte del proyecto final de **Computación en Internet I** . La plataforma ofrece funcionalidades básicas para que los administradores puedan gestionar productos y los clientes realicen compras de forma sencilla e intuitiva. Además, genera facturas para cada compra realizada y permite a los clientes acceder a su historial de compras.
 
