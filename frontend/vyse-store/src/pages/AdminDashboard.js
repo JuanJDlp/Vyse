@@ -233,6 +233,13 @@ const AdminDashboard = () => {
           value={newProduct.quantity}
           onChange={(e) => setNewProduct({ ...newProduct, quantity: e.target.value })}
         />
+        <input
+          type="text"
+          placeholder="Image URL"
+          className="input input-bordered w-full"
+          value={newProduct.image}
+          onChange={(e) => setNewProduct({ ...newProduct, image: e.target.value })}
+        />
         <button onClick={handleAddProduct} className="btn btn-md btn-primary align-middle">
           Add Product
         </button>
@@ -246,6 +253,7 @@ const AdminDashboard = () => {
               <th className="px-4 py-2 text-medium text-left">Description</th>
               <th className="px-4 py-2 text-medium text-left">Price</th>
               <th className="px-4 py-2 text-medium text-left">Quantity</th>
+              <th className="px-4 py-2 text-medium text-left">Image</th>
               <th className="px-4 py-2 text-medium text-center">Manage</th>
             </tr>
           </thead>
@@ -256,6 +264,7 @@ const AdminDashboard = () => {
                 <td className="border px-4 py-2">{product.description}</td>
                 <td className="border px-4 py-2">${product.price}</td>
                 <td className="border px-4 py-2">{product.quantity}</td>
+                <td className="border px-4 py-2">{product.image}</td>
                 <td className="border px-4 py-2 text-center">
                   <button
                     onClick={() => handleEdit(product)}

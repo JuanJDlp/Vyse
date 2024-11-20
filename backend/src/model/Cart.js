@@ -4,15 +4,20 @@ const CartModel = {
     addItemToCart: async (user_id, product_id, quantity) => {
         try {
             const result = await pool.query(
-                `INSERT INTO cart (user_id,product_id,quantity)
-                VALUES ($1,$2,$3) RETURNING *`, [user_id, product_id, quantity]
-            )
-            return result.rows[0]
+                `INSERT INTO cart (user_id, product_id, quantity)
+                VALUES ($1, $2, $3)
+                ON CONFLICT (user_id, product_id) 
+                DO UPDATE SET quantity = cart.quantity + $3
+                RETURNING *`,
+                [user_id, product_id, quantity]
+            );
+            return result.rows[0];
         } catch (err) {
-            console.error('Error adding product to the cart', err);
+            console.error("Error adding product to the cart", err);
             throw err;
         }
     },
+    
     cleanCartForUser: async (user_id) => {
         try {
             await pool.query(`DELETE FROM cart WHERE user_id = $1`,
@@ -148,7 +153,72 @@ const CartModel = {
         } finally {
             client.release();
         }
-    }
+    },
+    updateCartItemQuantity: async (user_id, itemId, quantity) => {
+        try {
+          const result = await pool.query(
+            `UPDATE cart SET quantity = $1 WHERE user_id = $2 AND product_id = $3 RETURNING *`,
+            [quantity, user_id, itemId]
+          );
+      
+          if (result.rowCount === 0) {
+            throw new Error("Cart item not found or does not belong to the user");
+          }
+      
+          return result.rows[0];
+        } catch (err) {
+          console.error("Error updating cart item quantity", err);
+          throw err;
+        }
+      },
+      deleteCartItem: async (user_id, product_id) => {
+        try {
+          const result = await pool.query(
+            `DELETE FROM cart WHERE user_id = $1 AND product_id = $2`,
+            [user_id, product_id]
+          );
+          return result.rowCount > 0;
+        } catch (err) {
+          console.error('Error deleting product from cart', err);
+          throw err;
+        }
+      },
+      getPurchaseByInvoiceId: async (user_id, invoice_id) => {
+        try {
+          const result = await pool.query(
+            `SELECT r.invoice_id, r.created_at, r.total_amount, 
+                    ri.product_id, ri.quantity, ri.price, p.name
+             FROM receipt r
+             JOIN receipt_items ri ON r.invoice_id = ri.receipt_id
+             JOIN products p ON ri.product_id = p.id
+             WHERE r.user_id = $1 AND r.invoice_id = $2`,
+            [user_id, invoice_id]
+          );
+      
+          if (result.rows.length === 0) {
+            throw new Error("Invoice not found");
+          }
+      
+          const purchaseData = {
+            invoice_id,
+            date: result.rows[0].created_at.toISOString(),
+            total_amount: result.rows[0].total_amount,
+            items: result.rows.map((row) => ({
+              name: row.name,
+              quantity: row.quantity,
+              price: row.price,
+              total: row.quantity * row.price,
+            })),
+          };
+      
+          return purchaseData;
+        } catch (err) {
+          console.error("Error fetching purchase by invoice ID", err);
+          throw err;
+        }
+      },
+      
+      
 }
 
 module.exports = { CartModel }

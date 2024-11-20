@@ -74,8 +74,9 @@ const HomePage = ({token, userRole, setCartCount }) => { // Added userRole prop
             <div key={product.id} className="card bg-base-200/10 shadow-md">
               <figure>
                 <img
-                  src="https://via.placeholder.com/150" // Placeholder image
-                  alt={product.name}
+                  src={product.image || "https://via.placeholder.com/150"} // Placeholder image
+                  alt={product.name || 'Product Image'}
+                  className="w-full h-32 object-cover rounded-t-md"
                 />
               </figure>
               <div className="card-body">

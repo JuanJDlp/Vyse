@@ -73,9 +73,76 @@ const getAllPurchases = async (req, res) => {
     }
 }
 
-module.exports = {
+const updateProductQuantityInCart = async (req, res) => {
+    const { itemId } = req.params;
+    const { quantity } = req.body;
+  
+    try {
+      if (!quantity || quantity <= 0) {
+        return res.status(400).json({ error: "Invalid quantity" });
+      }
+  
+      const userID = req.user.userId;
+  
+      // Update the cart item quantity
+      const updatedItem = await CartModel.updateCartItemQuantity(userID, itemId, quantity);
+  
+      if (updatedItem) {
+        return res.status(200).json({ message: "Quantity updated", updatedItem });
+      } else {
+        return res.status(404).json({ error: "Cart item not found" });
+      }
+    } catch (err) {
+      console.error("Error updating cart item", err);
+      return res.status(500).json({ error: "Unable to update cart item" });
+    }
+  };
+
+  const deleteCartItem = async (req, res) => {
+    try {
+      const userID = req.user.userId;
+      const { itemId } = req.params;
+  
+      const result = await CartModel.deleteCartItem(userID, itemId);
+      if (result) {
+        res.status(200).json({ message: 'Product removed from cart' });
+      } else {
+        res.status(404).json({ error: 'Item not found in cart' });
+      }
+    } catch (err) {
+      console.error('Error deleting product from cart', err);
+      res.status(500).json({ error: 'Unable to delete the item at this moment' });
+    }
+  };
+
+  const getPurchaseByInvoiceId = async (req, res) => {
+    try {
+      const userID = req.user.userId;
+      const { invoice_id } = req.params;
+  
+      const purchaseData = await CartModel.getPurchaseByInvoiceId(userID, invoice_id);
+  
+      res.status(200).json(purchaseData);
+    } catch (err) {
+      console.error("Error fetching purchase by invoice ID:", err);
+      res.status(err.message === "Invoice not found" ? 404 : 500).json({ error: err.message });
+    }
+  };
+  
+  module.exports = {
+    ...require("./CartController"), // Include existing methods
+    getPurchaseByInvoiceId,
+  };
+  
+  
+  
+  module.exports = {
     addProductToCart,
     checkOutClientCart,
     getAllProductsInCart,
-    getAllPurchases
-}
+    getAllPurchases,
+    updateProductQuantityInCart, 
+    deleteCartItem,
+    getPurchaseByInvoiceId
+  };
+  

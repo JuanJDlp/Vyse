@@ -8,7 +8,7 @@ const Navbar = ({ token, userRole, cartCount }) => {
   const isActive = (path) => location.pathname === path;
 
   return (
-    <nav className="bg-primary text-base-100 shadow-md p-4">
+    <nav className="bg-primary text-base-100 shadow-md p-4 top-0 sticky z-40">
       <div className="container mx-auto flex justify-between items-center">
         <div className="text-2xl font-bold italic">
           <Link to="/">Vyse Store</Link>

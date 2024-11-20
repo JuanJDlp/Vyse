@@ -7,6 +7,7 @@ import RegisterPage from './pages/RegisterPage';
 import CartPage from './pages/CartPage';
 import PurchaseHistoryPage from './pages/PurchaseHistoryPage';
 import AdminDashboard from './pages/AdminDashboard';
+import CheckoutPage from './pages/CheckOutPage';
 
 const App = () => {
   const [token, setToken] = useState(() => localStorage.getItem('token'));
@@ -21,6 +22,9 @@ const App = () => {
     setUserRole(payload.role); // Extract role from the token
   };
 
+  const updateCartCount = (count) => {
+    setCartCount(count);
+  };
   // Check the role when the app initializes
   useEffect(() => {
     if (token) {
@@ -39,9 +43,10 @@ const App = () => {
         />
         <Route path="/login" element={<LoginPage setToken={handleSetToken} />} />
         <Route path="/register" element={<RegisterPage />} />
-        <Route path="/cart" element={<CartPage token={token} setCartCount={setCartCount}/>} />
-        <Route path="/purchases" element={<PurchaseHistoryPage />} />
+        <Route path="/cart" element={<CartPage token={token} updateCartCount={updateCartCount}/>} />
+        <Route path="/purchases" element={<PurchaseHistoryPage token={token}/>} />
         <Route path="/admin" element={<AdminDashboard />} />
+        <Route path="/checkout" element={<CheckoutPage token={token} updateCartCount={updateCartCount}/>} />
       </Routes>
     </Router>
   );
