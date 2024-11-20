@@ -18,10 +18,14 @@ const createProduct = async (req, res) => {
         return res.status(400).json({ errors: errors.array() });
     }
 
-    const { name, description, price, quantity } = req.body;
+    const { name, description, price, quantity,image } = req.body;
+
+    if (!image){
+      image = "https://via.placeholder.com/150"
+    }
 
     try {
-        await ProductModel.createProduct(name, description, price, quantity);
+        await ProductModel.createProduct(name, description, price, quantity,image);
 
         res.status(201).json({
             message: "Product added successfully"
@@ -50,10 +54,10 @@ const getAllProducts = async (req, res) => {
 
 const updateProduct = async (req, res) => {
     const { id } = req.params;
-    const { name, description, price, quantity } = req.body;
+    const { name, description, price, quantity, image } = req.body;
   
     try {
-      await ProductModel.updateProduct(id, name, description, price, quantity);
+      await ProductModel.updateProduct(id, name, description, price, quantity,image);
       res.status(200).json({ message: 'Product updated successfully' });
     } catch (error) {
       console.error(error);

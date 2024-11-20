@@ -2,11 +2,11 @@ const { pool } = require("../database/DataBaseConfiguration")
 
 const ProductModel = {
 
-    createProduct: async (name, description, price, quantity) => {
+    createProduct: async (name, description, price, quantity,image) => {
         try{
             const result = await pool.query(
-                `INSERT INTO products (name, description,price,quantity)
-                VALUES ($1,$2,$3,$4) RETURNING *`, [name,description,price,quantity]
+                `INSERT INTO products (name, description,price,quantity,image)
+                VALUES ($1,$2,$3,$4,$5) RETURNING *`, [name,description,price,quantity,image]
             )
             return result.rows[0];
         }catch(err){
@@ -26,13 +26,13 @@ const ProductModel = {
             throw err;
         }
     },
-    updateProduct: async (id, name, description, price, quantity) => {
+    updateProduct: async (id, name, description, price, quantity,image) => {
         try {
           const result = await pool.query(
             `UPDATE products
-             SET name = $1, description = $2, price = $3, quantity = $4
-             WHERE id = $5 RETURNING *`,
-            [name, description, price, quantity, id]
+             SET name = $1, description = $2, price = $3, quantity = $4, image = $5
+             WHERE id = $6 RETURNING *`,
+            [name, description, price, quantity,image, id]
           );
           return result.rows[0];
         } catch (err) {

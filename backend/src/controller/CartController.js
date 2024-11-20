@@ -14,7 +14,7 @@ const addProductToCart = async (req, res) => {
 
     try {
         console.log(req.user)
-        const idOfUserInToken = req.userId;
+        const idOfUserInToken = req.user.userId;
         const userExists = UserModel.userExists(idOfUserInToken)
         if (userExists) {
             const { product_id, quantity } = req.body;
@@ -33,7 +33,7 @@ const addProductToCart = async (req, res) => {
 
 const checkOutClientCart = async (req, res) => {
     try {
-        const userID = req.userId
+        const userID = req.user.userId
         const { invoice_id, totalAmount, items } = await CartModel.checkout(userID)
         res.status(200).json({
             invoice_id,
@@ -48,7 +48,7 @@ const checkOutClientCart = async (req, res) => {
 
 const getAllProductsInCart = async (req, res) => {
     try {
-        const userID = req.userId
+        const userID = req.user.userId
         const products = await CartModel.getAllProductsInTheCart(userID);
 
         res.status(200).json(
@@ -62,7 +62,7 @@ const getAllProductsInCart = async (req, res) => {
 
 const getAllPurchases = async (req, res) => {
     try {
-        const userId = req.userId;
+        const userId = req.user.userId;
         const result = await CartModel.getAllPurchasesHistory(userId)
         res.status(200).json(
             result
