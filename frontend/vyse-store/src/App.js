@@ -11,7 +11,7 @@ import AdminDashboard from './pages/AdminDashboard';
 const App = () => {
   const [token, setToken] = useState(() => localStorage.getItem('token'));
   const [userRole, setUserRole] = useState(null);
-
+  const [cartCount, setCartCount] = useState(0); // Cart count state
   const handleSetToken = (newToken) => {
     setToken(newToken);
     localStorage.setItem('token', newToken);
@@ -28,12 +28,15 @@ const App = () => {
       setUserRole(payload.role);
     }
   }, [token]);
-
+  
   return (
     <Router>
-      <Navbar token={token} userRole={userRole} />
+      <Navbar token={token} userRole={userRole} cartCount={cartCount} />
       <Routes>
-        <Route path="/" element={<HomePage />} />
+      <Route
+          path="/"
+          element={<HomePage userRole={userRole} setCartCount={setCartCount} />} // Pass setCartCount to HomePage
+        />
         <Route path="/login" element={<LoginPage setToken={handleSetToken} />} />
         <Route path="/register" element={<RegisterPage />} />
         <Route path="/cart" element={<CartPage />} />

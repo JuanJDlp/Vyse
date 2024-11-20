@@ -1,27 +1,88 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 
-const HomePage = () => {
+const HomePage = ({userRole, setCartCount }) => { // Added userRole prop
   const [products, setProducts] = useState([]);
-
+  const [message, setMessage] = useState(null); // Feedback message
+  const [messageType, setMessageType] = useState(''); // Message type ('success' or 'error')
+  // Fetch products when the component mounts
   useEffect(() => {
-    axios.get('http://localhost:8080/api/products')
-      .then(response => setProducts(response.data))
-      .catch(error => console.error('Error fetching products:', error));
+    axios
+      .get('http://localhost:8080/api/products')
+      .then((response) => setProducts(response.data))
+      .catch((error) => console.error('Error fetching products:', error));
   }, []);
 
+  // Handle adding a product to the cart
+  const handleAddToCart = (productId) => {
+    axios
+      .post(
+        'http://localhost:8080/api/client/cart',
+        {
+          product_id: productId,
+          quantity: 1, // Default quantity for now
+        },
+        {
+          headers: { Authorization: `Bearer ${localStorage.getItem('token')}` }, // Add token for authenticated requests
+        }
+      )
+      .then(() => {
+        setCartCount((prevCount) => prevCount + 1); // Increment cart count in the Navbar
+        setMessage('Product added to cart');
+        setMessageType('success');
+        setTimeout(() => setMessage(null), 3000); // Clear message after 3 seconds
+      })
+      .catch((error) => {
+        console.error('Error adding product:', error);
+        setMessage('Failed to add product to cart');
+        setMessageType('error');
+        setTimeout(() => setMessage(null), 3000); // Clear message after 3 seconds
+      });
+  };
+
   return (
-    <div className="bg-gray-100 min-h-screen">
+    <div className="bg-gray-100 min-h-screen px-8 mx-14">
       <div className="container mx-auto py-10">
-        <h1 className="text-4xl font-bold text-center mb-10">Available Products</h1>
-        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
-          {products.map(product => (
-            <div key={product.id} className="card bg-white shadow-md rounded-lg p-4">
-              <h2 className="text-lg font-semibold">{product.name}</h2>
-              <p className="text-gray-500">{product.description}</p>
-              <p className="text-xl font-bold text-blue-600">Price: ${product.price}</p>
-              <p className="text-sm text-gray-600">Quantity: {product.quantity}</p>
-              <button className="mt-4 btn btn-primary w-full">Add to Cart</button>
+        <h1 className="text-2xl font-semibold text-center mb-6">Available Products</h1>
+
+        {/* Feedback Message */}
+        {message && (
+          <div
+            className={`mb-4 p-3 rounded ${
+              messageType === 'success' ? 'bg-success text-success-content' : 'bg-error text-error-content'
+            }`}
+          >
+            {message}
+          </div>
+        )}
+
+        {/* Product Grid */}
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+          {products.map((product) => (
+            <div key={product.id} className="card bg-base-200/10 shadow-md">
+              <figure>
+                <img
+                  src="https://via.placeholder.com/150" // Placeholder image
+                  alt={product.name}
+                />
+              </figure>
+              <div className="card-body">
+                <h2 className="card-title">{product.name}</h2>
+                <p>{product.description}</p>
+                <p className="font-bold text-primary">${product.price}</p>
+                <div className="card-actions justify-end">
+                  {userRole === 'admin' ? (
+                    <button className="btn btn-disabled btn-sm">Admin View</button>
+                  ) : (
+                    <button
+                      className="btn btn-secondary btn-sm"
+                      onClick={() => handleAddToCart(product.id)} // Pass product ID
+                    >
+                      Add to Cart
+                    </button>
+                  )}
+                </div>
+              </div>
             </div>
           ))}
         </div>
